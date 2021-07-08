@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json()) // for the request body
 // custom middleware
 app.use((req, res, next) => {
-    console.log(`income request on: ${req.method} ${req.url}`)
+    console.log(`incoming request on: ${req.method} ${req.url}`)
     res.locals.anything = `🚀`
     next()
 })
