@@ -4,6 +4,7 @@ const UserSchema = new mongoose.Schema({
     name: String,
     password: String,
     email: String,
+    phone_number: String,
     about: String,
     liked_post: [{
         type: mongoose.Schema.Types.ObjectId,
