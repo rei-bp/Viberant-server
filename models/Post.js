@@ -11,8 +11,10 @@ const PostSchema = new mongoose.Schema({
         type: Array
     },
     content: String,
+    attendees: Number,
     max_attendees: Number,
-    event_date: String
+    event_date: String,
+    address: String
 }, {
     timestamps: true
 })
