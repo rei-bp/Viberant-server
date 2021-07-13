@@ -13,4 +13,26 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.post('/new', async (req, res) => {
+    try {
+        const newPost = new db.Post({
+            user_id: req.body.user_id,
+            title: req.body.title,
+            tags: req.body.tags,
+            content: req.body.content,
+            max_attendees: req.body.max_attendees,
+            attendees: req.body.attendees,
+            max_attendees: req.body.max_attendees,
+            event_date: req.body.event_date,
+            address: req.body.address,
+            img_url: req.body.img_url
+        })
+        await newPost.save()
+        console.log('new post:', newPost)
+        res.json(newPost)
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 module.exports = router

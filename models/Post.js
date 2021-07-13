@@ -1,11 +1,10 @@
 const mongoose = require('mongoose')
 
 const PostSchema = new mongoose.Schema({
-    post_id: Number,
-    user_id: [{
+    user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }],
+    },
     title: String,
     tags: {
         type: Array
