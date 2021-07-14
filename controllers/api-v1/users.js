@@ -30,6 +30,7 @@ router.post('/register', async (req, res) => {
         const newUser = db.User({
             name: req.body.name,
             email: req.body.email,
+            about: req.body.about,
             password: hashedPassword
         })
 
@@ -90,6 +91,7 @@ router.post('/login', async (req, res) => {
 })
 
 // GET /auth-locked -- will redirect if a bad jwt is found
+
 router.get('/auth-locked', authLockedRoute, (req, res) => {
     // do whatever we like with the user
     console.log(res.locals.user)
