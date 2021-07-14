@@ -97,7 +97,7 @@ router.get('/auth-locked', authLockedRoute, (req, res) => {
     console.log(res.locals.user)
 
     // send private data back
-    res.json({ msg: 'welcome to the auth locked route you lucky dog 🦮' })
+    res.json({ about: res.locals.user.about })
 })
 
 module.exports = router
