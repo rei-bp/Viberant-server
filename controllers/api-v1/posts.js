@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const db = require('../../models')
 const jwt = require('jsonwebtoken')
+const authLockedRoute = require('./authLockedRoute.js')
+const { post } = require('./users')
 
 
 router.get('/', async (req, res) => {
@@ -11,6 +13,7 @@ router.get('/', async (req, res) => {
         console.log(posts)
     } catch (err) {
         console.log(`failed to find all`, err)
+        res.status(500).json({ msg: 'Internal Server Error, failed to find posts' })
     }
 })
 
@@ -21,6 +24,7 @@ router.get('/:id', async (req, res) => {
         console.log(post)
     } catch (err) {
         console.log(`failed to find one`, err)
+        res.status(500).json({ msg: 'Internal Server Error, failed to find one' })
     }
 })
 
@@ -33,7 +37,6 @@ router.post('/new', async (req, res) => {
             content: req.body.content,
             max_attendees: req.body.max_attendees,
             attendees: req.body.attendees,
-            max_attendees: req.body.max_attendees,
             event_date: req.body.event_date,
             address: req.body.address,
             img_url: req.body.img_url
@@ -43,23 +46,37 @@ router.post('/new', async (req, res) => {
         res.json(newPost)
     } catch (err) {
         console.log(`failed to create new post`, err)
+        res.status(500).json({ msg: 'Internal Server Error, failed to create a new post' })
     }
 })
 
-router.put('/update/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         const posts = await db.Post.findById(req.params.id)
-        posts.title = req.body.title,
-        posts.tags = req.body.tags,
-        posts.content = req.body.content,
-        posts.max_attendees = req.body.max_attendees,
-        posts.event_date = req.body.event_date,
-        posts.address = req.body.address,
-        posts.img_url = req.body.img_url
+        req.body.title = posts.title
+        req.body.tags = posts.tags
+        req.body.content = posts.content 
+        req.body.max_attendees = posts.max_attendees
+        req.body.event_date = posts.event_date
+        req.body.address = posts.address
+        req.body.img_url = posts.img_url
+
 
         posts.save()
+        console.log(posts)
+        res.json(posts)
     } catch (err) {
         console.log(`failed to update`, err)
+        res.status(500).json({ msg: 'Internal Server Error, failed to update post' })
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const post = await db.Post.findByIdAndDelete(req.params.id)
+    } catch (err) {
+        console.log(`failed to delete`, err)
+        res.status(500).json({msg: 'Internal Server Error, failed to delete post'})
     }
 })
 
