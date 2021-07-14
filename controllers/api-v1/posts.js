@@ -37,7 +37,6 @@ router.post('/new', async (req, res) => {
             content: req.body.content,
             max_attendees: req.body.max_attendees,
             attendees: req.body.attendees,
-            max_attendees: req.body.max_attendees,
             event_date: req.body.event_date,
             address: req.body.address,
             img_url: req.body.img_url
