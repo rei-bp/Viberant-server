@@ -17,7 +17,7 @@ router.get('/:id', async (req, res) => {
     try {
         const post = await db.Post.findOne({
             _id: req.params.id
-    })
+        })
         res.json(post)
         console.log(post)
     } catch (err) {
