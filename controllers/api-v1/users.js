@@ -9,6 +9,18 @@ router.get('/', (req, res) => {
     res.json({ msg: 'router is working' })
 })
 
+// router.get('/find', async (req, res) => {
+//     try {
+//         const findUser = await db.User.findOne({
+//             email: req.body.email
+//         })
+//         res.json(findUser)
+//         console.log(findUser)
+//     } catch (err) {
+//         console.log("couldn't find one", err)
+//     }
+// })
+
 // POST /users/register -- CREATE a new user (aka registration)
 router.post('/register', async (req, res) => {
     try {
