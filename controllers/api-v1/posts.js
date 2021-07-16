@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const post = await db.Post.findById(req.params.id)
+        const post = await db.Post.findById(req.params.id).populate('user_id')
         res.json(post)
         console.log(post)
     } catch (err) {
@@ -71,7 +71,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authLockedRoute, async (req, res) => {
     try {
         const post = await db.Post.findByIdAndDelete(req.params.id)
     } catch (err) {
