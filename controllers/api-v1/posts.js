@@ -7,10 +7,8 @@ const authLockedRoute = require('./authLockedRoute.js')
 
 router.get('/', async (req, res) => {
     try {
-        console.log('test post route')
         const posts = await db.Post.find()
         res.json(posts)
-        console.log(posts)
     } catch (err) {
         console.log(`failed to find all`, err)
         res.status(500).json({ msg: 'Internal Server Error, failed to find posts' })
@@ -28,7 +26,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/new', async (req, res) => {
+router.post('/new', authLockedRoute, async (req, res) => {
     try {
         const newPost = new db.Post({
             user_id: req.body.user_id,
@@ -58,8 +56,6 @@ router.put('/:id', async (req, res) => {
             req.body,
             { new: true, useFindAndModify: false }
             )
-        res.json(posts)
-        console.log(posts)
         res.json(posts)
     } catch (err) {
         console.log(`failed to update`, err)
