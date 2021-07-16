@@ -2,7 +2,7 @@ const router = require('express').Router()
 const db = require('../../models')
 const jwt = require('jsonwebtoken')
 const authLockedRoute = require('./authLockedRoute.js')
-const { post } = require('./users')
+
 
 
 router.get('/', async (req, res) => {
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const post = await db.Post.findById(req.params.id).populate('user_id')
+        const post = await db.Post.findById(req.params.id)
         res.json(post)
         console.log(post)
     } catch (err) {
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/new', async (req, res) => {
+router.post('/new', authLockedRoute, async (req, res) => {
     try {
         const newPost = new db.Post({
             user_id: req.body.user_id,
@@ -50,7 +50,7 @@ router.post('/new', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authLockedRoute, async (req, res) => {
     try {
         const posts = await db.Post.findById(req.params.id)
         req.body.title = posts.title
