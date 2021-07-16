@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/new', authLockedRoute, async (req, res) => {
+router.post('/new', async (req, res) => {
     try {
         const newPost = new db.Post({
             user_id: req.body.user_id,
@@ -80,7 +80,7 @@ router.put('/:id', authLockedRoute, async (req, res) => {
 //     }
 // })
 
-router.delete('/:id', authLockedRoute, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const post = await db.Post.findByIdAndDelete(req.params.id)
     } catch (err) {
