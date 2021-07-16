@@ -58,14 +58,6 @@ router.put('/:id', async (req, res) => {
             req.body,
             { new: true, useFindAndModify: false }
             )
-        // req.body.title = posts.title
-        // req.body.tags = posts.tags
-        // req.body.content = posts.content 
-        // req.body.max_attendees = posts.max_attendees
-        // req.body.event_date = posts.event_date
-        // req.body.event_time = posts.event_time
-        // req.body.address = posts.address
-        // req.body.img_url = posts.img_url
         res.json(posts)
         console.log(posts)
         res.json(posts)
