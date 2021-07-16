@@ -2,7 +2,7 @@ const router = require('express').Router()
 const db = require('../../models')
 const jwt = require('jsonwebtoken')
 const authLockedRoute = require('./authLockedRoute.js')
-const { post } = require('./users')
+
 
 
 router.get('/', async (req, res) => {
@@ -38,6 +38,7 @@ router.post('/new', async (req, res) => {
             max_attendees: req.body.max_attendees,
             attendees: req.body.attendees,
             event_date: req.body.event_date,
+            event_time: req.body.event_time,
             address: req.body.address,
             img_url: req.body.img_url
         })
@@ -50,7 +51,7 @@ router.post('/new', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authLockedRoute, async (req, res) => {
     try {
         const posts = await db.Post.findById(req.params.id)
         req.body.title = posts.title
@@ -58,6 +59,7 @@ router.put('/:id', async (req, res) => {
         req.body.content = posts.content 
         req.body.max_attendees = posts.max_attendees
         req.body.event_date = posts.event_date
+        req.body.event_time = posts.event_time
         req.body.address = posts.address
         req.body.img_url = posts.img_url
 
@@ -71,7 +73,14 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', authLockedRoute, async (req, res) => {
+// router.post('/join/:id', async (req, res) => {
+//     try {
+//         const join = await db.Post.findById(req.params.id)
+//         join.attendees.push()
+//     }
+// })
+
+router.delete('/:id', async (req, res) => {
     try {
         const post = await db.Post.findByIdAndDelete(req.params.id)
     } catch (err) {
