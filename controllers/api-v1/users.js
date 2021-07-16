@@ -9,6 +9,18 @@ router.get('/', (req, res) => {
     res.json({ msg: 'router is working' })
 })
 
+// router.get('/find', async (req, res) => {
+//     try {
+//         const findUser = await db.User.findOne({
+//             email: req.body.email
+//         })
+//         res.json(findUser)
+//         console.log(findUser)
+//     } catch (err) {
+//         console.log("couldn't find one", err)
+//     }
+// })
+
 // POST /users/register -- CREATE a new user (aka registration)
 router.post('/register', async (req, res) => {
     try {
@@ -63,7 +75,7 @@ router.post('/login', async (req, res) => {
 
         const validationFailedMessage = 'Incorrect username or password'
 
-        // if the user found -- return immediately
+        // if the user is not found -- return immediately
         if(!findUser) return res.status(400).json({ msg: validationFailedMessage })
 
         // check the user's password from the DB against what is in the req.body
