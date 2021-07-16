@@ -51,20 +51,22 @@ router.post('/new', async (req, res) => {
     }
 })
 
-router.put('/:id', authLockedRoute, async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
-        const posts = await db.Post.findById(req.params.id)
-        req.body.title = posts.title
-        req.body.tags = posts.tags
-        req.body.content = posts.content 
-        req.body.max_attendees = posts.max_attendees
-        req.body.event_date = posts.event_date
-        req.body.event_time = posts.event_time
-        req.body.address = posts.address
-        req.body.img_url = posts.img_url
-
-
-        posts.save()
+        const posts = await db.Post.findOneAndUpdate(
+            { _id: req.params.id },
+            req.body,
+            { new: true, useFindAndModify: false }
+            )
+        // req.body.title = posts.title
+        // req.body.tags = posts.tags
+        // req.body.content = posts.content 
+        // req.body.max_attendees = posts.max_attendees
+        // req.body.event_date = posts.event_date
+        // req.body.event_time = posts.event_time
+        // req.body.address = posts.address
+        // req.body.img_url = posts.img_url
+        res.json(posts)
         console.log(posts)
         res.json(posts)
     } catch (err) {
@@ -100,7 +102,7 @@ router.post('/join/:id', authLockedRoute, async (req, res) => {
 
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authLockedRoute, async (req, res) => {
     try {
         const post = await db.Post.findByIdAndDelete(req.params.id)
     } catch (err) {
@@ -108,8 +110,6 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({msg: 'Internal Server Error, failed to delete post'})
     }
 })
-
-
 
 
 module.exports = router
