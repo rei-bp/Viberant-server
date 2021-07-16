@@ -13,8 +13,8 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post'}],
     created_post: [{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Post'}]
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'}]
 }, {
     timestamps: true
 })

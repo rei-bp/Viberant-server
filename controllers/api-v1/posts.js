@@ -73,12 +73,32 @@ router.put('/:id', authLockedRoute, async (req, res) => {
     }
 })
 
-// router.post('/join/:id', async (req, res) => {
+router.post('/join/:id', authLockedRoute, async (req, res) => {
+    try {
+        const join = await db.Post.findById(req.params.id).populate('user_id')
+        join.attendees.push(res.locals.user.name)
+        join.save()
+        res.json({ msg: `User ${res.locals.user.name} has joined ${join.title} event`})
+    } catch (err) {
+        console.log(`failed to join`, err)
+        res.status(500).json({ msg: 'Internal Server Error, failed to join post'})
+    }
+})
+
+// router.delete('/join/:id', async (req, res) => {
 //     try {
-//         const join = await db.Post.findById(req.params.id)
-//         join.attendees.push()
+//         const unjoin = await db.Post.findByIdAndUpdate(req.params.id).populate('user_id')
+//         unjoin.$pull
+
+//         join.save()
+//         console.log(posts)
+//     } catch (err) {
+//         console.log(`failed to join`, err)
+//         res.status(500).json({ msg: "Internal Server Error, failed to join post"})
 //     }
 // })
+
+
 
 router.delete('/:id', async (req, res) => {
     try {
