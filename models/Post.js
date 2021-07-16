@@ -15,6 +15,7 @@ const PostSchema = new mongoose.Schema({
     },
     max_attendees: Number,
     event_date: String,
+    event_time: String,
     address: String,
     img_url: String
 }, {
